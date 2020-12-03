@@ -15,6 +15,7 @@ defmodule NewDeploy.DataCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -28,10 +29,10 @@ defmodule NewDeploy.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(NewDeploy.Repo)
+    :ok = Sandbox.checkout(NewDeploy.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(NewDeploy.Repo, {:shared, self()})
+      Sandbox.mode(NewDeploy.Repo, {:shared, self()})
     end
 
     :ok
